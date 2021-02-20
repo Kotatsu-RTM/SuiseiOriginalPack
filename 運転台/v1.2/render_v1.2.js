@@ -307,16 +307,6 @@ function init(par1, par2) {
 
 //#################### Render ####################//
 function render(entity, pass, par3) {
-	//運転台表示
-	cab.render(renderer);
-	if (entity !== null) {
-	    var doorClose = Math.floor(entity.doorMoveL + entity.doorMoveR);
-	    if (doorClose == 0) cabClose.render(renderer)
-	    else cabOpen.render(renderer)
-	}else if (entity === null){
-	    cabClose.render(renderer);
-	}
-
     //通常描画
 	if(pass == 0){
 		cab.render(renderer);
@@ -354,196 +344,231 @@ function render(entity, pass, par3) {
 	}
 	GL11.glPopMatrix();
 }
+//#################### ここまで Render ####################//
 
 //#################### 彗星鉄道 運転台 HUD スクリプト ####################//
-function render_suiseihud(entity){
-    if(entity != null){ //"entity.~"の情報取得メソッドを使うと、車両選択画面でクラッシュするのを防ぐ。
-        // 車両の状態表示var宣言
-        //###詳細は"https://waya0125.com/api.png"を参照###//
-        var S_Progress = entity.getTrainStateData(0),
-            S_notch = entity.getTrainStateData(1),
-            S_Signal = entity.getTrainStateData(2),
-            S_Lightdata = entity.getTrainStateData(5),
-            S_Pantadata = entity.getTrainStateData(6),
-            S_Rollsign = entity.getTrainStateData(8),
-            S_Announce = entity.getTrainStateData(9),
-            S_Gyakuten = entity.getTrainStateData(10),
-            S_Syanaitou = entity.getTrainStateData(11),
-            S_CarSize = (entity.getFormation().size()-1),
-            S_Speed = entity.getSpeed() * 72.0,
-            S_BC = entity.brakeCount * 3,
-            S_MR = (((entity.brakeAirCount) + 216) * (100 / 432)) + 700,
-            S_DoorL = entity.doorMoveL / 60, //左ドア状態取得
-            S_DoorR = entity.doorMoveR / 60; //右ドア状態取得
-            
-        // 車両設定用var宣言
-        var S_dataMap = entity.getResourceState().getDataMap(),
-            S_ds = S_Speed + 0.5, //速度を取得（何故か足りないから+0.5）
-            S_dsA = (parseInt(S_ds)), //整数に直す
-            S_dsB = String(S_dsA), //データの型を文字列に
-            S_ds1 = S_dsB.slice(-1); //末尾1桁（下一桁）を取得。変数ds1として宣言
-    
+function render_suiseihud(entity) {
+    if (entity == null) return; //"entity.~"の情報取得メソッドを使うと、車両選択画面でクラッシュするのを防ぐ。
+    var dataMap = entity.getResourceState().getDataMap();
+    // 車両の状態表示var宣言
+    //###詳細は"https://waya0125.com/api.png"を参照###//
+    var S_Progress = entity.getTrainStateData(0),
+        S_notch = entity.getTrainStateData(1),
+        S_Signal = entity.getTrainStateData(2),
+        S_Lightdata = entity.getTrainStateData(5),
+        S_Pantadata = entity.getTrainStateData(6),
+        S_Rollsign = entity.getTrainStateData(8),
+        S_Announce = entity.getTrainStateData(9),
+        S_Gyakuten = entity.getTrainStateData(10),
+        S_Syanaitou = entity.getTrainStateData(11),
+        S_CarSize = (entity.getFormation().size() - 1),
+        S_Speed = entity.getSpeed() * 72.0,
+        S_BC = entity.brakeCount * 3,
+        S_MR = (((entity.brakeAirCount) + 216) * (100 / 432)) + 700,
+        S_DoorL = entity.doorMoveL / 60, //左ドア状態取得
+        S_DoorR = entity.doorMoveR / 60; //右ドア状態取得
+
+    if (dataMap.getBoolean("mph")) {
+        S_Speed = S_Speed / 1.609344;
+        mph.render(renderer);
+    }
+    else kmph.render(renderer);
+
+    // 車両設定用var宣言
+    var S_dataMap = entity.getResourceState().getDataMap(),
+        S_ds = S_Speed + 0.5, //速度を取得（何故か足りないから+0.5）
+        S_dsA = (parseInt(S_ds)), //整数に直す
+        S_dsB = String(S_dsA), //データの型を文字列に
+        S_ds1 = S_dsB.slice(-1); //末尾1桁（下一桁）を取得。変数ds1として宣言
+
     //デジタル速度計 下一桁の描画
-    switch (S_ds1){
-        case '0':S_0km.render(renderer);break;
-        case '1':S_1km.render(renderer);break;
-        case '2':S_2km.render(renderer);break;
-        case '3':S_3km.render(renderer);break;
-        case '4':S_4km.render(renderer);break;
-        case '5':S_5km.render(renderer);break;
-        case '6':S_6km.render(renderer);break;
-        case '7':S_7km.render(renderer);break;
-        case '8':S_8km.render(renderer);break;
-        case '9':S_9km.render(renderer);break;
-    default:S_0km.render(renderer);break;
+    switch (S_ds1) {
+        case '0': S_0km.render(renderer); break;
+        case '1': S_1km.render(renderer); break;
+        case '2': S_2km.render(renderer); break;
+        case '3': S_3km.render(renderer); break;
+        case '4': S_4km.render(renderer); break;
+        case '5': S_5km.render(renderer); break;
+        case '6': S_6km.render(renderer); break;
+        case '7': S_7km.render(renderer); break;
+        case '8': S_8km.render(renderer); break;
+        case '9': S_9km.render(renderer); break;
+        default: S_0km.render(renderer); break;
     }
-    
+
     //デジタル速度計 十より上の桁描画。理論上は最大999km/h、それ以上or想定外の数値は0km/hを描画。マイナス速度はそのうち対応。
-    if(S_ds >= 0 && S_ds < 10){S_00km.render(renderer);}
-        else if(S_ds >= 10 && S_ds < 20){S_10km.render(renderer);}
-        else if(S_ds >= 20 && S_ds < 30){S_20km.render(renderer);}
-        else if(S_ds >= 30 && S_ds < 40){S_30km.render(renderer);}
-        else if(S_ds >= 40 && S_ds < 50){S_40km.render(renderer);}
-        else if(S_ds >= 50 && S_ds < 60){S_50km.render(renderer);}
-        else if(S_ds >= 60 && S_ds < 70){S_60km.render(renderer);}
-        else if(S_ds >= 70 && S_ds < 80){S_70km.render(renderer);}
-        else if(S_ds >= 80 && S_ds < 90){S_80km.render(renderer);}
+    if (S_ds >= 10 && S_ds < 20) { S_10km.render(renderer); }
+    else if (S_ds >= 20 && S_ds < 30) { S_20km.render(renderer); }
+    else if (S_ds >= 30 && S_ds < 40) { S_30km.render(renderer); }
+    else if (S_ds >= 40 && S_ds < 50) { S_40km.render(renderer); }
+    else if (S_ds >= 50 && S_ds < 60) { S_50km.render(renderer); }
+    else if (S_ds >= 60 && S_ds < 70) { S_60km.render(renderer); }
+    else if (S_ds >= 70 && S_ds < 80) { S_70km.render(renderer); }
+    else if (S_ds >= 80 && S_ds < 90) { S_80km.render(renderer); }
 
-        else if(S_ds >= 90 && S_ds < 100){S_90km.render(renderer);}
-        else if(S_ds >= 100 && S_ds < 110){S_100km.render(renderer);}
-        else if(S_ds >= 110 && S_ds < 120){S_110km.render(renderer);}
-        else if(S_ds >= 120 && S_ds < 130){S_120km.render(renderer);}
-        else if(S_ds >= 130 && S_ds < 140){S_130km.render(renderer);}
-        else if(S_ds >= 140 && S_ds < 150){S_140km.render(renderer);}
-        else if(S_ds >= 150 && S_ds < 160){S_150km.render(renderer);}
-        else if(S_ds >= 160 && S_ds < 170){S_160km.render(renderer);}
-        else if(S_ds >= 170 && S_ds < 180){S_170km.render(renderer);}
-        else if(S_ds >= 180 && S_ds < 190){S_180km.render(renderer);}
+    else if (S_ds >= 90 && S_ds < 100) { S_90km.render(renderer); }
+    else if (S_ds >= 100 && S_ds < 110) { S_100km.render(renderer); }
+    else if (S_ds >= 110 && S_ds < 120) { S_110km.render(renderer); }
+    else if (S_ds >= 120 && S_ds < 130) { S_120km.render(renderer); }
+    else if (S_ds >= 130 && S_ds < 140) { S_130km.render(renderer); }
+    else if (S_ds >= 140 && S_ds < 150) { S_140km.render(renderer); }
+    else if (S_ds >= 150 && S_ds < 160) { S_150km.render(renderer); }
+    else if (S_ds >= 160 && S_ds < 170) { S_160km.render(renderer); }
+    else if (S_ds >= 170 && S_ds < 180) { S_170km.render(renderer); }
+    else if (S_ds >= 180 && S_ds < 190) { S_180km.render(renderer); }
 
-        else if(S_ds >= 190 && S_ds < 200){S_190km.render(renderer);}
-        else if(S_ds >= 200 && S_ds < 210){S_200km.render(renderer);}
-        else if(S_ds >= 210 && S_ds < 220){S_210km.render(renderer);}
-        else if(S_ds >= 220 && S_ds < 230){S_220km.render(renderer);}
-        else if(S_ds >= 230 && S_ds < 240){S_230km.render(renderer);}
-        else if(S_ds >= 240 && S_ds < 250){S_240km.render(renderer);}
-        else if(S_ds >= 250 && S_ds < 260){S_250km.render(renderer);}
-        else if(S_ds >= 260 && S_ds < 270){S_260km.render(renderer);}
-        else if(S_ds >= 270 && S_ds < 280){S_270km.render(renderer);}
-        else if(S_ds >= 280 && S_ds < 290){S_280km.render(renderer);}
-        
-        else if(S_ds >= 290 && S_ds < 300){S_290km.render(renderer);}
-        else if(S_ds >= 300 && S_ds < 310){S_300km.render(renderer);}
-        else if(S_ds >= 310 && S_ds < 320){S_310km.render(renderer);}
-        else if(S_ds >= 320 && S_ds < 330){S_320km.render(renderer);}
-        else if(S_ds >= 330 && S_ds < 340){S_330km.render(renderer);}
-        else if(S_ds >= 340 && S_ds < 350){S_340km.render(renderer);}
-        else if(S_ds >= 350 && S_ds < 360){S_350km.render(renderer);}
-        else if(S_ds >= 360 && S_ds < 370){S_360km.render(renderer);}
-        else if(S_ds >= 370 && S_ds < 380){S_370km.render(renderer);}
-        else if(S_ds >= 380 && S_ds < 390){S_380km.render(renderer);}
-        
-        else if(S_ds >= 390 && S_ds < 400){S_390km.render(renderer);}
-        else if(S_ds >= 400 && S_ds < 410){S_400km.render(renderer);}
-        else if(S_ds >= 410 && S_ds < 420){S_410km.render(renderer);}
-        else if(S_ds >= 420 && S_ds < 430){S_420km.render(renderer);}
-        else if(S_ds >= 430 && S_ds < 440){S_430km.render(renderer);}
-        else if(S_ds >= 440 && S_ds < 450){S_440km.render(renderer);}
-        else if(S_ds >= 450 && S_ds < 460){S_450km.render(renderer);}
-        else if(S_ds >= 460 && S_ds < 470){S_460km.render(renderer);}
-        else if(S_ds >= 470 && S_ds < 480){S_470km.render(renderer);}
-        else if(S_ds >= 480 && S_ds < 490){S_480km.render(renderer);}
-        
-        else if(S_ds >= 490 && S_ds < 500){S_490km.render(renderer);}
-        else if(S_ds >= 500 && S_ds < 510){S_500km.render(renderer);}
-        else if(S_ds >= 510 && S_ds < 520){S_510km.render(renderer);}
-        else if(S_ds >= 520 && S_ds < 530){S_520km.render(renderer);}
-        else if(S_ds >= 530 && S_ds < 540){S_530km.render(renderer);}
-        else if(S_ds >= 540 && S_ds < 550){S_540km.render(renderer);}
-        else if(S_ds >= 550 && S_ds < 560){S_550km.render(renderer);}
-        else if(S_ds >= 560 && S_ds < 570){S_560km.render(renderer);}
-        else if(S_ds >= 570 && S_ds < 580){S_570km.render(renderer);}
-        else if(S_ds >= 580 && S_ds < 590){S_580km.render(renderer);}
-        
-        else if(S_ds >= 590 && S_ds < 600){S_590km.render(renderer);}
-        else if(S_ds >= 600 && S_ds < 610){S_600km.render(renderer);}
-        else if(S_ds >= 610 && S_ds < 620){S_610km.render(renderer);}
-        else if(S_ds >= 620 && S_ds < 630){S_620km.render(renderer);}
-        else if(S_ds >= 630 && S_ds < 640){S_630km.render(renderer);}
-        else if(S_ds >= 640 && S_ds < 650){S_640km.render(renderer);}
-        else if(S_ds >= 650 && S_ds < 660){S_650km.render(renderer);}
-        else if(S_ds >= 660 && S_ds < 670){S_660km.render(renderer);}
-        else if(S_ds >= 670 && S_ds < 680){S_670km.render(renderer);}
-        else if(S_ds >= 680 && S_ds < 690){S_680km.render(renderer);}
-        
-        else if(S_ds >= 690 && S_ds < 700){S_690km.render(renderer);}
-        else if(S_ds >= 700 && S_ds < 710){S_700km.render(renderer);}
-        else if(S_ds >= 710 && S_ds < 720){S_710km.render(renderer);}
-        else if(S_ds >= 720 && S_ds < 730){S_720km.render(renderer);}
-        else if(S_ds >= 730 && S_ds < 740){S_730km.render(renderer);}
-        else if(S_ds >= 740 && S_ds < 750){S_740km.render(renderer);}
-        else if(S_ds >= 750 && S_ds < 760){S_750km.render(renderer);}
-        else if(S_ds >= 760 && S_ds < 770){S_760km.render(renderer);}
-        else if(S_ds >= 770 && S_ds < 780){S_770km.render(renderer);}
-        else if(S_ds >= 780 && S_ds < 790){S_780km.render(renderer);}
+    else if (S_ds >= 190 && S_ds < 200) { S_190km.render(renderer); }
+    else if (S_ds >= 200 && S_ds < 210) { S_200km.render(renderer); }
+    else if (S_ds >= 210 && S_ds < 220) { S_210km.render(renderer); }
+    else if (S_ds >= 220 && S_ds < 230) { S_220km.render(renderer); }
+    else if (S_ds >= 230 && S_ds < 240) { S_230km.render(renderer); }
+    else if (S_ds >= 240 && S_ds < 250) { S_240km.render(renderer); }
+    else if (S_ds >= 250 && S_ds < 260) { S_250km.render(renderer); }
+    else if (S_ds >= 260 && S_ds < 270) { S_260km.render(renderer); }
+    else if (S_ds >= 270 && S_ds < 280) { S_270km.render(renderer); }
+    else if (S_ds >= 280 && S_ds < 290) { S_280km.render(renderer); }
 
-        else if(S_ds >= 790 && S_ds < 800){S_790km.render(renderer);}
-        else if(S_ds >= 800 && S_ds < 810){S_800km.render(renderer);}
-        else if(S_ds >= 810 && S_ds < 820){S_810km.render(renderer);}
-        else if(S_ds >= 820 && S_ds < 830){S_820km.render(renderer);}
-        else if(S_ds >= 830 && S_ds < 840){S_830km.render(renderer);}
-        else if(S_ds >= 840 && S_ds < 850){S_840km.render(renderer);}
-        else if(S_ds >= 850 && S_ds < 860){S_850km.render(renderer);}
-        else if(S_ds >= 860 && S_ds < 870){S_860km.render(renderer);}
-        else if(S_ds >= 870 && S_ds < 880){S_870km.render(renderer);}
-        else if(S_ds >= 880 && S_ds < 890){S_880km.render(renderer);}
-        
-        else if(S_ds >= 890 && S_ds < 900){S_890km.render(renderer);}
-        else if(S_ds >= 900 && S_ds < 910){S_900km.render(renderer);}
-        else if(S_ds >= 910 && S_ds < 920){S_910km.render(renderer);}
-        else if(S_ds >= 920 && S_ds < 930){S_920km.render(renderer);}
-        else if(S_ds >= 930 && S_ds < 940){S_930km.render(renderer);}
-        else if(S_ds >= 940 && S_ds < 950){S_940km.render(renderer);}
-        else if(S_ds >= 950 && S_ds < 960){S_950km.render(renderer);}
-        else if(S_ds >= 960 && S_ds < 970){S_960km.render(renderer);}
-        else if(S_ds >= 970 && S_ds < 980){S_970km.render(renderer);}
-        else if(S_ds >= 980 && S_ds < 990){S_980km.render(renderer);}
-        else if(S_ds >= 990 && S_ds < 999){S_990km.render(renderer);}
+    else if (S_ds >= 290 && S_ds < 300) { S_290km.render(renderer); }
+    else if (S_ds >= 300 && S_ds < 310) { S_300km.render(renderer); }
+    else if (S_ds >= 310 && S_ds < 320) { S_310km.render(renderer); }
+    else if (S_ds >= 320 && S_ds < 330) { S_320km.render(renderer); }
+    else if (S_ds >= 330 && S_ds < 340) { S_330km.render(renderer); }
+    else if (S_ds >= 340 && S_ds < 350) { S_340km.render(renderer); }
+    else if (S_ds >= 350 && S_ds < 360) { S_350km.render(renderer); }
+    else if (S_ds >= 360 && S_ds < 370) { S_360km.render(renderer); }
+    else if (S_ds >= 370 && S_ds < 380) { S_370km.render(renderer); }
+    else if (S_ds >= 380 && S_ds < 390) { S_380km.render(renderer); }
 
-        else if(S_ds == 1000){S_00km.render(renderer);}
-        else if(S_ds < 0){S_00km.render(renderer);}
-    else{
-        S_00km.render(renderer);
-    }
-    
+    else if (S_ds >= 390 && S_ds < 400) { S_390km.render(renderer); }
+    else if (S_ds >= 400 && S_ds < 410) { S_400km.render(renderer); }
+    else if (S_ds >= 410 && S_ds < 420) { S_410km.render(renderer); }
+    else if (S_ds >= 420 && S_ds < 430) { S_420km.render(renderer); }
+    else if (S_ds >= 430 && S_ds < 440) { S_430km.render(renderer); }
+    else if (S_ds >= 440 && S_ds < 450) { S_440km.render(renderer); }
+    else if (S_ds >= 450 && S_ds < 460) { S_450km.render(renderer); }
+    else if (S_ds >= 460 && S_ds < 470) { S_460km.render(renderer); }
+    else if (S_ds >= 470 && S_ds < 480) { S_470km.render(renderer); }
+    else if (S_ds >= 480 && S_ds < 490) { S_480km.render(renderer); }
+
+    else if (S_ds >= 490 && S_ds < 500) { S_490km.render(renderer); }
+    else if (S_ds >= 500 && S_ds < 510) { S_500km.render(renderer); }
+    else if (S_ds >= 510 && S_ds < 520) { S_510km.render(renderer); }
+    else if (S_ds >= 520 && S_ds < 530) { S_520km.render(renderer); }
+    else if (S_ds >= 530 && S_ds < 540) { S_530km.render(renderer); }
+    else if (S_ds >= 540 && S_ds < 550) { S_540km.render(renderer); }
+    else if (S_ds >= 550 && S_ds < 560) { S_550km.render(renderer); }
+    else if (S_ds >= 560 && S_ds < 570) { S_560km.render(renderer); }
+    else if (S_ds >= 570 && S_ds < 580) { S_570km.render(renderer); }
+    else if (S_ds >= 580 && S_ds < 590) { S_580km.render(renderer); }
+
+    else if (S_ds >= 590 && S_ds < 600) { S_590km.render(renderer); }
+    else if (S_ds >= 600 && S_ds < 610) { S_600km.render(renderer); }
+    else if (S_ds >= 610 && S_ds < 620) { S_610km.render(renderer); }
+    else if (S_ds >= 620 && S_ds < 630) { S_620km.render(renderer); }
+    else if (S_ds >= 630 && S_ds < 640) { S_630km.render(renderer); }
+    else if (S_ds >= 640 && S_ds < 650) { S_640km.render(renderer); }
+    else if (S_ds >= 650 && S_ds < 660) { S_650km.render(renderer); }
+    else if (S_ds >= 660 && S_ds < 670) { S_660km.render(renderer); }
+    else if (S_ds >= 670 && S_ds < 680) { S_670km.render(renderer); }
+    else if (S_ds >= 680 && S_ds < 690) { S_680km.render(renderer); }
+
+    else if (S_ds >= 690 && S_ds < 700) { S_690km.render(renderer); }
+    else if (S_ds >= 700 && S_ds < 710) { S_700km.render(renderer); }
+    else if (S_ds >= 710 && S_ds < 720) { S_710km.render(renderer); }
+    else if (S_ds >= 720 && S_ds < 730) { S_720km.render(renderer); }
+    else if (S_ds >= 730 && S_ds < 740) { S_730km.render(renderer); }
+    else if (S_ds >= 740 && S_ds < 750) { S_740km.render(renderer); }
+    else if (S_ds >= 750 && S_ds < 760) { S_750km.render(renderer); }
+    else if (S_ds >= 760 && S_ds < 770) { S_760km.render(renderer); }
+    else if (S_ds >= 770 && S_ds < 780) { S_770km.render(renderer); }
+    else if (S_ds >= 780 && S_ds < 790) { S_780km.render(renderer); }
+
+    else if (S_ds >= 790 && S_ds < 800) { S_790km.render(renderer); }
+    else if (S_ds >= 800 && S_ds < 810) { S_800km.render(renderer); }
+    else if (S_ds >= 810 && S_ds < 820) { S_810km.render(renderer); }
+    else if (S_ds >= 820 && S_ds < 830) { S_820km.render(renderer); }
+    else if (S_ds >= 830 && S_ds < 840) { S_830km.render(renderer); }
+    else if (S_ds >= 840 && S_ds < 850) { S_840km.render(renderer); }
+    else if (S_ds >= 850 && S_ds < 860) { S_850km.render(renderer); }
+    else if (S_ds >= 860 && S_ds < 870) { S_860km.render(renderer); }
+    else if (S_ds >= 870 && S_ds < 880) { S_870km.render(renderer); }
+    else if (S_ds >= 880 && S_ds < 890) { S_880km.render(renderer); }
+
+    else if (S_ds >= 890 && S_ds < 900) { S_890km.render(renderer); }
+    else if (S_ds >= 900 && S_ds < 910) { S_900km.render(renderer); }
+    else if (S_ds >= 910 && S_ds < 920) { S_910km.render(renderer); }
+    else if (S_ds >= 920 && S_ds < 930) { S_920km.render(renderer); }
+    else if (S_ds >= 930 && S_ds < 940) { S_930km.render(renderer); }
+    else if (S_ds >= 940 && S_ds < 950) { S_940km.render(renderer); }
+    else if (S_ds >= 950 && S_ds < 960) { S_950km.render(renderer); }
+    else if (S_ds >= 960 && S_ds < 970) { S_960km.render(renderer); }
+    else if (S_ds >= 970 && S_ds < 980) { S_970km.render(renderer); }
+    else if (S_ds >= 980 && S_ds < 990) { S_980km.render(renderer); }
+    else if (S_ds >= 990 && S_ds < 999) { S_990km.render(renderer); }
+
+    else if (S_ds == 1000) { S_00km.render(renderer); }
+    else if (S_ds < 0) { S_00km.render(renderer); }
+    else { Dummy.render(renderer); }
+
     //パンタ上昇下降状態表示
-    if(S_Pantadata == 1){
+    if (S_Pantadata == 1) {
         panta_true.render(renderer);
-    }else{
+    } else {
         panta_false.render(renderer);
     }
     //車内灯状態表示
-    if(S_Syanaitou == 1){
+    if (S_Syanaitou == 1) {
         TLamp_true.render(renderer);
-    }else{
+    } else {
         TLamp_false.render(renderer);
     }
     //前照灯状態表示
-    if(S_Lightdata == 1){
+    if (S_Lightdata == 1) {
         FLamp_true.render(renderer);
-    }else if(S_Lightdata == 2){
+    } else if (S_Lightdata == 2) {
         FLamp_all.render(renderer);
-    }else{
+    } else {
         FLamp_false.render(renderer);
     }
     //回生ブレーキ状態表示
-    if(S_notch >= -7 && S_notch <= -1 && S_Speed >= 5) {
+    if (S_notch >= -7 && S_notch <= -1 && S_Speed >= 5) {
         KLamp_true.render(renderer);
-    }else{
+    } else {
         KLamp_false.render(renderer);
     }
-}}
 
-//デジタル時計
+    //行き先表示 ここは各自で搭載先車両の方向幕を一番最初をゼロからカウントして設定して下さい。わからない人はりどみ参照
+    if (S_Rollsign == 0) {Dummy.render(renderer);}
+    else if (S_Rollsign == 1) {Local1.render(renderer);}
+    else if (S_Rollsign == 2) {Local2.render(renderer);}
+    else if (S_Rollsign == 3) {Rapid.render(renderer);}
+    else if (S_Rollsign == 4) {SpecialRapid.render(renderer);}
+    else if (S_Rollsign == 5) {RegionalRapid.render(renderer);}
+    else if (S_Rollsign == 6) {Expless.render(renderer);}
+    else if (S_Rollsign == 7) {LimExp.render(renderer);}
+    else if (S_Rollsign == 8) {SemiExp.render(renderer);}
+    else if (S_Rollsign == 9) {SemiSExp.render(renderer);}
+    else if (S_Rollsign == 10) {RapidExpless.render(renderer);}
+    else if (S_Rollsign == 11) {RapidLimExp.render(renderer);}
+    else if (S_Rollsign == 12) {ComRapid.render(renderer);}
+    else if (S_Rollsign == 13) {ComExp.render(renderer);}
+    else if (S_Rollsign == 14) {ComLimExp.render(renderer);}
+    else if (S_Rollsign == 15) {ComSemiExp.render(renderer);}
+    else if (S_Rollsign == 16) {ComSemiSExp.render(renderer);}
+    else if (S_Rollsign == 17) {ComRapidExp.render(renderer);}
+    else if (S_Rollsign == 18) {ComRapLimExp.render(renderer);}
+    else if (S_Rollsign >= 19 && S_Rollsign <= 21) {Direct.render(renderer);}
+    else if (S_Rollsign == 22) {OutOfService.render(renderer);}
+    else if (S_Rollsign == 23) {TestRun.render(renderer);}
+    else if (S_Rollsign == 24) {Extra.render(renderer);}
+    else if (S_Rollsign == 25) {Dantai.render(renderer);}
+    else if (S_Rollsign == 26) {OutOfService.render(renderer);}
+    else if (S_Rollsign == 27) {KUSOKAISOKU.render(renderer);}
+    else if (S_Rollsign == 28) {Direct.render(renderer);}
+    else {Dummy.render(renderer);}
+}
+
+//デジタル時計 このコードは真冬雪々さんのものをそのまま使用しています。ありがとうございます。
 function render_Clock(entity){
     if(entity != null){
         var timezone = 9.0;
