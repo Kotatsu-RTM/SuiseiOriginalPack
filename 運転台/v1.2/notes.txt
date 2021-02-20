@@ -1,26 +1,13 @@
-SampleCode SRN125A_beta
 switch(S_Rollsign){
     case "0" : Dummy.render(renderer);break;
-    case "1" : OutOfService.render(renderer);break;
-    case "2" : TestRun.render(renderer);break;
-    case "3" : Extra.render(renderer);break;
-    case "4" : Dummy.render(renderer);break;
-    case "5" : Extra.render(renderer);break;
-    case "6" : OutOfService.render(renderer);break;
-    case "7" : OutOfService.render(renderer);break;
-    case "8" : OutOfService.render(renderer);break;
-    case "9" : OutOfService.render(renderer);break;
-    case "10" : OutOfService.render(renderer);break;
-    case "11" : OutOfService.render(renderer);break;
-    case "12" : Dummy.render(renderer);break;
-    case "13" : Dummy.render(renderer);break;
-    case "14" : Extra.render(renderer);break;
-    case "15" : Extra.render(renderer);break;
+    case "1" : example1.render(renderer);break;
+    case "2" : example2.render(renderer);break;
+    case "3" : example3.render(renderer);break;
     default : Dummy.render(renderer);break;
 }
 
 
-SampleCode SR6200_1000
+
 if(S_Rollsign == 0){Dummy.render(renderer);}
     else if(S_Rollsign >= 1 && S_Rollsign <= 4){Local2.render(renderer);}
     else if(S_Rollsign >= 5 && S_Rollsign <= 8){Expless.render(renderer);}

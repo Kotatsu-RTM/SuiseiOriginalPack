@@ -541,27 +541,6 @@ function render_suiseihud(entity){
     }else{
         KLamp_false.render(renderer);
     }
-
-    //行き先表示 ここは各自で搭載先車両の方向幕を一番最初をゼロからカウントして設定して下さい。わからない人はりどみ参照
-    switch(S_Rollsign){
-        case "0" : Dummy.render(renderer);break;
-        case "1" : OutOfService.render(renderer);break;
-        case "2" : TestRun.render(renderer);break;
-        case "3" : Extra.render(renderer);break;
-        case "4" : Dummy.render(renderer);break;
-        case "5" : Extra.render(renderer);break;
-        case "6" : OutOfService.render(renderer);break;
-        case "7" : OutOfService.render(renderer);break;
-        case "8" : OutOfService.render(renderer);break;
-        case "9" : OutOfService.render(renderer);break;
-        case "10" : OutOfService.render(renderer);break;
-        case "11" : OutOfService.render(renderer);break;
-        case "12" : Dummy.render(renderer);break;
-        case "13" : Dummy.render(renderer);break;
-        case "14" : Extra.render(renderer);break;
-        case "15" : Extra.render(renderer);break;
-        default : Dummy.render(renderer);break;
-    }
 }}
 
 //デジタル時計
