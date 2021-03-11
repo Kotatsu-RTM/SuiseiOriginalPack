@@ -33,7 +33,7 @@ function init(par1, par2) {
         "Notch_Object",
         "Speed_Object","km_h",
         "Train_Checker_Object","Train_Lamp_Check","Face_Lamp_Check","Kaisei_Check","Panta_Check",
-        "Real_Time_Object",
+        "Real_Time_Object","RunMode_Check",
         "MasCon_Object","Notch_Print","MasConPed",
         "Leverser_Object","Leverser","Rotate","Leverser_Print"
     ));
@@ -198,6 +198,9 @@ function init(par1, par2) {
     KLamp_false = renderer.registerParts(new Parts("K_false"));
     panta_true = renderer.registerParts(new Parts("panta_Up"));
     panta_false = renderer.registerParts(new Parts("panta_Down"));
+    RunMode_Slow = renderer.registerParts(new Parts("RunMode_Slow"));
+    RunMode_Normal = renderer.registerParts(new Parts("RunMode_Normal"));
+    RunMode_High = renderer.registerParts(new Parts("RunMode_High"));
 
     //"リアルタイムの" 時間表示です。なにかとマイクラよりリアルタイムのほうがわかりやすいよね
     H_00 = renderer.registerParts(new Parts("H_00"));
