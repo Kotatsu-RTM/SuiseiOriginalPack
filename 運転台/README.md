@@ -2,7 +2,7 @@
     ■　彗星鉄道車両研究所製作 運転台 Ver1.2　■
 
     作者     : わや
-    Ver      : 1.2.0
+    Ver      : 1.3.0
     製作垢   : https://twitter.com/Suisei_THFactry
     作者Page : https://twitter.com/wayamoti2015
     作者HP   : https://waya0125.com/
@@ -117,6 +117,9 @@ else {Dummy.render(renderer);}
 ```
 
 # ◆更新履歴◆  
+### Version 1.2
+{内容は追々追記}
+
 ### Version 1.2
 正規リリースできそうな感じになりました。  
 速度計が動き、車内状態が表示されるようになりました。  

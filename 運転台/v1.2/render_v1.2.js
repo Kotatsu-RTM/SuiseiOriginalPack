@@ -47,7 +47,7 @@ function init(par1, par2) {
     cabHDClose = renderer.registerParts(new Parts("HomeDoorLamp_true"));
     cabHDOpen = renderer.registerParts(new Parts("HomeDoorLamp_false"));
 
-    //マスコン動かします&左画面ノッチ確認画面も宣言しちゃいます//
+    //左画面ノッチ確認画面も宣言しちゃいます//
     Notch_B8 = renderer.registerParts(new Parts("Mas_B8","B8"));
     Notch_B7 = renderer.registerParts(new Parts("Mas_B7","B7"));
     Notch_B6 = renderer.registerParts(new Parts("Mas_B6","B6"));
@@ -63,10 +63,9 @@ function init(par1, par2) {
     Notch_P4 = renderer.registerParts(new Parts("Mas_P4","P4"));
     Notch_P5 = renderer.registerParts(new Parts("Mas_P5","P5"));
 
-    //レバーサーもついでに動かしちゃいます宣言//
-    Handle_Mae = renderer.registerParts(new Parts("Handle_Mae"));
-    Handle_N = renderer.registerParts(new Parts("Handle_N"));
-    Handle_Usiro = renderer.registerParts(new Parts("Handle_Usiro"));
+    //マスコンレバーサーもついでに動かしちゃいます宣言//
+    MasCon = renderer.registerParts(new Parts("JR_OneMascon","JR_OneMascon_Push","MasCon"));
+    Handle = renderer.registerParts(new Parts("Handle"));
 
     //スピード用の宣言。略してスピード宣言。光のごとく宣言するよ。なんちゃって。
     S_0km = renderer.registerParts(new Parts("S_0km"));
@@ -201,6 +200,8 @@ function init(par1, par2) {
     RunMode_Slow = renderer.registerParts(new Parts("RunMode_Slow"));
     RunMode_Normal = renderer.registerParts(new Parts("RunMode_Normal"));
     RunMode_High = renderer.registerParts(new Parts("RunMode_High"));
+    BoostMode_true = renderer.registerParts(new Parts("BoostMode_true"));
+    BoostMode_false = renderer.registerParts(new Parts("BoostMode_false"));
 
     //"リアルタイムの" 時間表示です。なにかとマイクラよりリアルタイムのほうがわかりやすいよね
     H_00 = renderer.registerParts(new Parts("H_00"));
@@ -296,7 +297,10 @@ function init(par1, par2) {
     //加速計側のHUD
     miniHUD_font = renderer.registerParts(new Parts(
         "StopperBrake_font","HDBlock_font","HDSetup_font","HDClose_font",
-        "DRClose_font","TASC_B_font","TASC_Pa_font","TASC_Po_font"
+        "DRClose_font","TASC_B_font","TASC_Pa_font","TASC_Po_font",
+        "SecurityBrake_font","EmergencyBrake_font","PaternClose_font",
+        "PaternOccurrences_font","ATSPower_font","ATCPower_font",
+        "ATOPower_font","PsPower_font"
     ));
     TASC_B_true = renderer.registerParts(new Parts("TASC_B_true"));
     TASC_Pa_true = renderer.registerParts(new Parts("TASC_Pa_true"));
@@ -306,6 +310,14 @@ function init(par1, par2) {
     HDClose_true = renderer.registerParts(new Parts("HDClose_true"));
     DRClose_true = renderer.registerParts(new Parts("DRClose_true"));
     StopperBrake_true = renderer.registerParts(new Parts("StopperBrake_true"));
+    SecurityBrake_true = renderer.registerParts(new Parts("SecurityBrake_true"));
+    EmergencyBrake_true = renderer.registerParts(new Parts("EmergencyBrake_true"));
+    PaternClose_font = renderer.registerParts(new Parts("PaternClose_font"));
+    PaternOccurrences_font = renderer.registerParts(new Parts("PaternOccurrences_font"));
+    ATSPower_true = renderer.registerParts(new Parts("ATSPower_true"));
+    ATCPower_true = renderer.registerParts(new Parts("ATCPower_true"));
+    ATOPower_true = renderer.registerParts(new Parts("ATOPower_true"));
+    PsPower_true = renderer.registerParts(new Parts("PsPower_true"));
 }
 
 //#################### Render ####################//
