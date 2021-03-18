@@ -28,10 +28,9 @@ function init(par1, par2) {
         "ScreenCover","Screen3_Temp",
         "ScreenCover1","Screen3_Temp1",
         "ScreenCover2","Screen3_Temp2",
-        "Shubetsu",
-        "Legacy_SPATC",
+        "Shubetsu_Object",
         "Notch_Object",
-        "Speed_Object","km_h",
+        "Speed_Object",
         "Train_Checker_Object","Train_Lamp_Check","Face_Lamp_Check","Kaisei_Check","Panta_Check",
         "Real_Time_Object","RunMode_Check",
         "MasCon_Object","Notch_Print","MasConPed",
@@ -293,6 +292,24 @@ function init(par1, par2) {
     Dantai = renderer.registerParts(new Parts("Dantai"));
     Direct = renderer.registerParts(new Parts("Direct"));
     TestRun = renderer.registerParts(new Parts("TestRun"));
+
+    //両数表示。RTMの仕様とまぁ現実的な両数的に考えて16を上限としてます。
+    1car = renderer.registerParts(new Parts("1car"));
+    2car = renderer.registerParts(new Parts("2car"));
+    3car = renderer.registerParts(new Parts("3car"));
+    4car = renderer.registerParts(new Parts("4car"));
+    5car = renderer.registerParts(new Parts("5car"));
+    6car = renderer.registerParts(new Parts("6car"));
+    7car = renderer.registerParts(new Parts("7car"));
+    8car = renderer.registerParts(new Parts("8car"));
+    9car = renderer.registerParts(new Parts("9car"));
+    10car = renderer.registerParts(new Parts("10car"));
+    11car = renderer.registerParts(new Parts("11car"));
+    12car = renderer.registerParts(new Parts("12car"));
+    13car = renderer.registerParts(new Parts("13car"));
+    14car = renderer.registerParts(new Parts("14car"));
+    15car = renderer.registerParts(new Parts("15car"));
+    16car = renderer.registerParts(new Parts("16car"));
 
     //加速計側のHUD
     miniHUD_font = renderer.registerParts(new Parts(
