@@ -1,8 +1,8 @@
 # SuiseiCabModule
-    ■　彗星鉄道車両研究所製作 運転台 Ver1.3　■
+    ■　彗星鉄道車両研究所製作 運転台 Ver1.4　■
 
     作者     : わや
-    Ver      : 1.3.0
+    Ver      : 1.4.0
     製作垢   : https://twitter.com/Suisei_THFactry
     作者Page : https://twitter.com/wayamoti2015
     作者HP   : https://waya0125.com/
@@ -120,6 +120,12 @@ else {Dummy.render(renderer);}
 ```
 
 # ◆更新履歴◆  
+### Version 1.4
+運転台のUVを一新したため互換性が失われました。
+新CS-ATCより刻みを増やし、任意の値で制限できるようにしました。
+運転台のフォントが一部変わりました。
+ATS-Pは一時的に廃止、ATS-Psや東急関連のものは撤廃となりました。
+
 ### Version 1.3
 運転台のフォントが変わりました  
 とても見やすい、JRタイプです。所々は私好みになってます。  
