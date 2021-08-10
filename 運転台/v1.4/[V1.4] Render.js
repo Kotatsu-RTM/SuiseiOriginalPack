@@ -1,13 +1,24 @@
-/*=================================
-彗星鉄道車両研究所製作 運転台 Ver1.3
+/*===================================================
+彗星鉄道車両研究所製作 運転台 Ver1.4
 著作権はすべてわやに返還されます。
 ここに記載されているものを勝手に使用することを禁じます。
 使用する際は必ず一言必ずお声掛け下さい。
-V1.2とV1.3の製品に互換性はありませんので予めご了承ください。
+V1.2,V1.3,V1.4の製品に互換性はありません。
 Created by waya, Powered by Siwo951, hi03 and 真冬雪々.
 Twitter: @wayamoti2015
-Web: https://waya0125.com
-=================================*/
+Web: https://waya0125.com/
+===================================================*/
+
+/*===================================================
+主な変更点
+・部分的に宣言が足りていなかったので追記してます
+・CSATC部分は多く追記
+・miniHUDにATSBarを追記
+・miniHUDのPatterCloseを撤廃してATACSPowerに変更
+・ブレーキがMRBarとBCBarのみになりました。
+・その他index代わりに可視的にわかるように区切りを設定。
+・旧型製品との互換性を完全撤廃。UVを一新したため全て使用不可
+===================================================*/
 
 importPackage(Packages.jp.ngt.rtm);               //RTMCore
 importPackage(Packages.jp.ngt.rtm.render);        //RTM用 Render関連
@@ -16,31 +27,21 @@ importPackage(Packages.jp.ngt.ngtlib.math);       //計算機能
 importPackage(Packages.org.lwjgl.opengl);         //OpenGL Render関連
 var renderClass = "jp.ngt.rtm.render.VehiclePartsRenderer";
 
+//#################### 彗星鉄道 運転台 オブジェクト宣言 ####################//
 function init(par1, par2) {
-    //運転台本体。特に動かすわけでもないのでまとめちゃう。//
+    //## 運転台本体 ##//
     cab = renderer.registerParts(new Parts(
-        "Suisei_Cab","Base","Base1_new","Base2","Base3","Base4","Base5","Box",
-        "Bogo_Musen","Display",
+        "Suisei_Cab","Base1_new","Base2","Base3","Base4","Base5","Box","Bogo_Musen","Display",
         "DM_Sys","DeadMan_System","DeadMan_System_Push",
-        "Screen1","Screen2",
-        "Screen1_Add","Clock","DoorLampCover",
-        "Screen2_Add2","nextStop","nextStopOn","nextStopText",
-        "ScreenCover","Screen3_Temp",
-        "ScreenCover1","Screen3_Temp1",
-        "ScreenCover2","Screen3_Temp2",
-        "Shubetsu_Object",
-        "Notch_Object",
-        "Speed_Object",
-        "Train_Checker_Object","Train_Lamp_Check","Face_Lamp_Check","Kaisei_Check","Panta_Check",
-        "Real_Time_Object","RunMode_Check",
-        "MasCon_Object","Notch_Print","MasConPed",
-        "Leverser_Object","Leverser","Rotate","Leverser_Print"
+        "Notch_Print","MasConPed",
+        "Leverser","Rotate","Leverser_Print",
+        "Shubetsu_Object","VehicleNumber_Object",
+        "Train_Lamp_Check","Face_Lamp_Check","Kaisei_Check","Panta_Check","RunMode_Check"
     ));
-    //"JR_OM","JR_OneMascon","JR_OneMascon_Push"//
 
     Dummy = renderer.registerParts(new Parts("Dummy"));
 
-    //左画面ノッチ確認画面も宣言しちゃいます//
+    //## TIMSノッチ確認画面 ##//
     Notch_B8 = renderer.registerParts(new Parts("Mas_B8","B8"));
     Notch_B7 = renderer.registerParts(new Parts("Mas_B7","B7"));
     Notch_B6 = renderer.registerParts(new Parts("Mas_B6","B6"));
@@ -56,7 +57,7 @@ function init(par1, par2) {
     Notch_P4 = renderer.registerParts(new Parts("Mas_P4","P4"));
     Notch_P5 = renderer.registerParts(new Parts("Mas_P5","P5"));
 
-    //スピード用の宣言。略してスピード宣言。光のごとく宣言するよ。なんちゃって。
+    //## 加速計の数値宣言 ##//
     mph = renderer.registerParts(new Parts("mph"));
     km_h = renderer.registerParts(new Parts("km_h"));
 
@@ -90,7 +91,7 @@ function init(par1, par2) {
     S_800km = renderer.registerParts(new Parts("S_800km"));
     S_900km = renderer.registerParts(new Parts("S_900km"));
 
-    //新CS-ATCの上位互換です。任意の値でスピード表記と制限が可能
+    //## 新CS-ATCの上位互換 任意の値でスピード表記と制限が可能 ##//
     CSATC_Back = renderer.registerParts(new Parts("CSATC_Back"));
     //通常速度時
     ATCs_0 = renderer.registerParts(new Parts("ATCs_0"));
@@ -122,7 +123,7 @@ function init(par1, par2) {
     ATCs_700 = renderer.registerParts(new Parts("ATCs_700"));
     ATCs_800 = renderer.registerParts(new Parts("ATCs_800"));
     ATCs_900 = renderer.registerParts(new Parts("ATCs_900"));
-    //50km\h以下時
+    //50km/h以下時
     ATCp_0 = renderer.registerParts(new Parts("ATCp_0"));
     ATCp_1 = renderer.registerParts(new Parts("ATCp_1"));
     ATCp_2 = renderer.registerParts(new Parts("ATCp_2"));
@@ -142,7 +143,7 @@ function init(par1, par2) {
     //0km/h以下時
     RATC_0 = renderer.registerParts(new Parts("RATC_0"));
 
-    //"リアルタイムの" 時間表示です。なにかとマイクラよりリアルタイムのほうがわかりやすいよね
+    //## リアルタイム時間表示 ##//
     H_00 = renderer.registerParts(new Parts("H_00"));
     H_01 = renderer.registerParts(new Parts("H_01"));
     H_02 = renderer.registerParts(new Parts("H_02"));
@@ -168,7 +169,7 @@ function init(par1, par2) {
     H_22 = renderer.registerParts(new Parts("H_22"));
     H_23 = renderer.registerParts(new Parts("H_23"));
     H_24 = renderer.registerParts(new Parts("H_24"));
-    
+    //分
     m_0x = renderer.registerParts(new Parts("m_0x"));
     m_1x = renderer.registerParts(new Parts("m_1x"));
     m_2x = renderer.registerParts(new Parts("m_2x"));
@@ -186,7 +187,7 @@ function init(par1, par2) {
     m_x7 = renderer.registerParts(new Parts("m_x7"));
     m_x8 = renderer.registerParts(new Parts("m_x8"));
     m_x9 = renderer.registerParts(new Parts("m_x9"));
-    
+    //秒
     s_0x = renderer.registerParts(new Parts("s_0x"));
     s_1x = renderer.registerParts(new Parts("s_1x"));
     s_2x = renderer.registerParts(new Parts("s_2x"));
@@ -205,17 +206,17 @@ function init(par1, par2) {
     s_x8 = renderer.registerParts(new Parts("s_x8"));
     s_x9 = renderer.registerParts(new Parts("s_x9"));
 
-    //マスコンレバーサーもついでに動かしちゃいます宣言//
+    //## マスコンレバーサー ##//
     MasCon = renderer.registerParts(new Parts("JR_OneMascon","JR_OneMascon_Push","MasCon"));
     Handle = renderer.registerParts(new Parts("Handle"));
 
-    //ドア開閉確認ランプ//
+    //## 運転台側ドア開閉確認ランプ ##//
     cabClose = renderer.registerParts(new Parts("DoorLampGreen","DoorLamp_true"));
     cabOpen = renderer.registerParts(new Parts("DoorLampGlay","DoorLamp_false"));
     cabHDClose = renderer.registerParts(new Parts("HomeDoorLamp_true"));
     cabHDOpen = renderer.registerParts(new Parts("HomeDoorLamp_false"));
 
-    //種別表示。車両の種別に合わせて任意の種別を合わせて下さい。
+    //## 種別表示 もっと下の方にある車両の種別設定の部分で使用する任意の種別設定して下さい ##//
     Local1 = renderer.registerParts(new Parts("Local1"));
     Local2 = renderer.registerParts(new Parts("Local2"));
     Local3 = renderer.registerParts(new Parts("Local3"));
@@ -243,7 +244,7 @@ function init(par1, par2) {
     Direct = renderer.registerParts(new Parts("Direct"));
     TestRun = renderer.registerParts(new Parts("TestRun"));
 
-    //両数表示。RTMの仕様とまぁ現実的な両数的に考えて16を上限としてます。
+    //## 両数表示 RTMの仕様（17両以上はクラッシュする問題）と現実的に考えて16を上限としてます ##//
     car1 = renderer.registerParts(new Parts("1car"));
     car2 = renderer.registerParts(new Parts("2car"));
     car3 = renderer.registerParts(new Parts("3car"));
@@ -261,21 +262,21 @@ function init(par1, par2) {
     car15 = renderer.registerParts(new Parts("15car"));
     car16 = renderer.registerParts(new Parts("16car"));
 
-    //加速計側のHUD
+    //## 加速計側のHUD ##//
     miniHUD_font = renderer.registerParts(new Parts(
         "HDBlock_font","HDSetup_font","HDClose_font","DRClose_font",
         "TASC_B_font","TASC_Pa_font","TASC_Po_font",
-        "StopperBrake_font","SecurityBrake_font","EmergencyBrake_font",
-        "PaternOccurrences_font",
-        "ATSPower_font","ATSAction_font","ATCPower_font","ATACSPower","ATOPower_font"
-    )); //20210810変更 PatternClose_fontからATACSPower_font
-    miniHUD_DefaultATS = renderer.registerParts(new Parts(
-      "ATS_0","ATS_75","ATS_150"
+        "StopperBrake_font","PaternOccurrences_font",
+        "SecurityBrake_font","EmergencyBrake_font",
+        "ATSPower_font","ATSAction_font","ATCPower_font","ATACSPower_font","ATOPower_font"
     ));
-    miniHUD_HighSpeedATS = renderer.registerParts(new Parts(
-      "ATS_0","ATS_100","ATS_200"
-    ));
+    miniHUD_DefaultATS = renderer.registerParts(new Parts("ATS_0","ATS_75","ATS_150"));
+    miniHUD_HighSpeedATS = renderer.registerParts(new Parts("ATS_0","ATS_100","ATS_200"));
+    miniHUD_ATSBar = renderer.registerParts(new Parts("P_Bar"));
+    //miniHUD_Ps1Bar = renderer.registerParts(new Parts("Ps_Bar01")); そのうちATACSで使うのでその予約
+    //miniHUD_Ps2Bar = renderer.registerParts(new Parts("Ps_Bar02")); そのうちATACSで使うのでその予約
 
+    //## miniHUDのランプ点灯用 ##//
     HDBlock_true = renderer.registerParts(new Parts("HDBlock_true"));
     HDSetup_true = renderer.registerParts(new Parts("HDSetup_true"));
     HDClose_true = renderer.registerParts(new Parts("HDClose_true"));
@@ -286,67 +287,53 @@ function init(par1, par2) {
     StopperBrake_true = renderer.registerParts(new Parts("StopperBrake_true"));
     SecurityBrake_true = renderer.registerParts(new Parts("SecurityBrake_true"));
     EmergencyBrake_true = renderer.registerParts(new Parts("EmergencyBrake_true"));
-    ATACSPower_true = renderer.registerParts(new Parts("ATACSPower_true")); //20210810変更 PatternClose_trueからATACSPower_true
+    ATACSPower_true = renderer.registerParts(new Parts("ATACSPower_true"));
     PaternOccurrences_font = renderer.registerParts(new Parts("PaternOccurrences_font"));
     ATSPower_true = renderer.registerParts(new Parts("ATSPower_true"));
     ATSAction_true = renderer.registerParts(new Parts("ATSAction_true"));
     ATCPower_true = renderer.registerParts(new Parts("ATCPower_true"));
     ATOPower_true = renderer.registerParts(new Parts("ATOPower_true"));
 
-    //ATC関連のHUD
-    Signal_Object = renderer.registerParts(new Parts("Signal_Object"));
-    AdvanceNotice_true = renderer.registerParts(new Parts("AdvanceNotice_true"));
-    AdvanceNotice_false = renderer.registerParts(new Parts("AdvanceNotice_false"));
-    Signal_RED = renderer.registerParts(new Parts("Signal_RED"));
-    Signal_GLEEN = renderer.registerParts(new Parts("Signal_GLEEN"));
-    Signal_P_true = renderer.registerParts(new Parts("Signal_P_true"));
-    Signal_P_false = renderer.registerParts(new Parts("Signal_P_false"));
-    Signal_Stop_true = renderer.registerParts(new Parts("Signal_Stop_true"));
-    Signal_Stop_false = renderer.registerParts(new Parts("Signal_Stop_false"));
+    //## ブレーキ関連 ##//
+    BrakeBar_Object = renderer.registerParts(new Parts("BrakeBar_Object")); 
+    BC_bar = renderer.registerParts(new Parts("BC_bar"));
+    MR_bar = renderer.registerParts(new Parts("MR_bar"));
 
-    //ブレーキ関連 BC_1,BC_2,MR_1,MR_2は削除
-    BrakeBar_Object = renderer.registerParts(new Parts("BrakeBar_Object")); //20210810変更 
-    BC_bar = renderer.registerParts(new Parts("BC_bar")); //20210810変更
-    MR_bar = renderer.registerParts(new Parts("MR_bar")); //20210810変更
-
-    //ATS系オブジェクト ATSP,ATSPsは削除
-    P_Bar = renderer.registerParts(new Parts("P_Bar"));
-    Ps_Bar01 = renderer.registerParts(new Parts("Ps_Bar01"));
-    Ps_Bar01 = renderer.registerParts(new Parts("Ps_Bar02"));
-    ATS_0 = renderer.registerParts(new Parts("ATS_0"));
-    ATS_75 = renderer.registerParts(new Parts("ATS_75"));
-    ATS_100 = renderer.registerParts(new Parts("ATS_100"));
-    ATS_150 = renderer.registerParts(new Parts("ATS_150"));
-    ATS_200 = renderer.registerParts(new Parts("ATS_200"));
-
-    //使用保安装置表示ランプ
-    ATACS_false = renderer.registerParts(new Parts("ATACS_false")); //20210810変更
-    ATACS_true = renderer.registerParts(new Parts("ATACS_true")); //20210810変更
+    //## 使用保安装置表示ランプ ##//
+    ATACS_false = renderer.registerParts(new Parts("ATACS_false"));
+    ATACS_true = renderer.registerParts(new Parts("ATACS_true"));
     ATC_false = renderer.registerParts(new Parts("ATC_false"));
     ATC_true = renderer.registerParts(new Parts("ATC_true"));
-    ATS_false = renderer.registerParts(new Parts("ATS_false")); //20210810変更
-    ATS_true = renderer.registerParts(new Parts("ATS_true")); //20210810変更
+    ATS_false = renderer.registerParts(new Parts("ATS_false"));
+    ATS_true = renderer.registerParts(new Parts("ATS_true"));
     ATSKaihou_false = renderer.registerParts(new Parts("ATSKaihou_false"));
     ATSKaihou_true = renderer.registerParts(new Parts("ATSKaihou_true"));
     ATSKoshou_false = renderer.registerParts(new Parts("ATSKoshou_false"));
     ATSKoshou_true = renderer.registerParts(new Parts("ATSKoshou_true"));
 
-    //電車の状態表示機。前面ライトはついてる？パンタ上がってる？などなど。
+    //## TIMS2側の車両ｽﾃｰﾀｽ表示HUD 現状5個分 ##//
+    //車内灯確認
+    TLamp_all = renderer.registerParts(new Parts("TLamp_all"));
     TLamp_true = renderer.registerParts(new Parts("TLamp_true"));
     TLamp_false = renderer.registerParts(new Parts("TLamp_false"));
+    //前面灯確認
     FLamp_true = renderer.registerParts(new Parts("FLamp_true"));
     FLamp_false = renderer.registerParts(new Parts("FLamp_false"));
     FLamp_all = renderer.registerParts(new Parts("FLamp_all"));
+    //回生確認
     KLamp_true = renderer.registerParts(new Parts("K_true"));
     KLamp_false = renderer.registerParts(new Parts("K_false"));
+    //パンタ確認
     panta_true = renderer.registerParts(new Parts("panta_Up"));
     panta_false = renderer.registerParts(new Parts("panta_Down"));
+    //走行ﾓｰﾄﾞ確認 RunMode:低速/通常/高速表記 Boost:STPG向け
     RunMode_Slow = renderer.registerParts(new Parts("RunMode_Slow"));
     RunMode_Normal = renderer.registerParts(new Parts("RunMode_Normal"));
     RunMode_High = renderer.registerParts(new Parts("RunMode_High"));
     BoostMode_true = renderer.registerParts(new Parts("BoostMode_true"));
     BoostMode_false = renderer.registerParts(new Parts("BoostMode_false"));
 }
+//#################### ここまで オブジェクト宣言 ####################//
 
 //#################### Render ####################//
 function render(entity, pass, par3) {
@@ -702,4 +689,4 @@ function render_Clock(entity){
         else if(hour == 23){H_23.render(renderer);}
     }
 }
-//#################### ここまでHUDスクリプト ####################//
+//#################### ここまで HUD スクリプト ####################//
