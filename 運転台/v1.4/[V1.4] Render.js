@@ -42,20 +42,20 @@ function init(par1, par2) {
     Dummy = renderer.registerParts(new Parts("Dummy"));
 
     //## TIMSノッチ確認画面 ##//
-    Notch_B8 = renderer.registerParts(new Parts("Mas_B8","B8"));
-    Notch_B7 = renderer.registerParts(new Parts("Mas_B7","B7"));
-    Notch_B6 = renderer.registerParts(new Parts("Mas_B6","B6"));
-    Notch_B5 = renderer.registerParts(new Parts("Mas_B5","B5"));
-    Notch_B4 = renderer.registerParts(new Parts("Mas_B4","B4"));
-    Notch_B3 = renderer.registerParts(new Parts("Mas_B3","B3"));
-    Notch_B2 = renderer.registerParts(new Parts("Mas_B2","B2"));
-    Notch_B1 = renderer.registerParts(new Parts("Mas_B1","B1"));
-    Notch_N = renderer.registerParts(new Parts("Mas_N","N"));
-    Notch_P1 = renderer.registerParts(new Parts("Mas_P1","P1"));
-    Notch_P2 = renderer.registerParts(new Parts("Mas_P2","P2"));
-    Notch_P3 = renderer.registerParts(new Parts("Mas_P3","P3"));
-    Notch_P4 = renderer.registerParts(new Parts("Mas_P4","P4"));
-    Notch_P5 = renderer.registerParts(new Parts("Mas_P5","P5"));
+    Notch_B8 = renderer.registerParts(new Parts("B8"));
+    Notch_B7 = renderer.registerParts(new Parts("B7"));
+    Notch_B6 = renderer.registerParts(new Parts("B6"));
+    Notch_B5 = renderer.registerParts(new Parts("B5"));
+    Notch_B4 = renderer.registerParts(new Parts("B4"));
+    Notch_B3 = renderer.registerParts(new Parts("B3"));
+    Notch_B2 = renderer.registerParts(new Parts("B2"));
+    Notch_B1 = renderer.registerParts(new Parts("B1"));
+    Notch_N = renderer.registerParts(new Parts("N"));
+    Notch_P1 = renderer.registerParts(new Parts("P1"));
+    Notch_P2 = renderer.registerParts(new Parts("P2"));
+    Notch_P3 = renderer.registerParts(new Parts("P3"));
+    Notch_P4 = renderer.registerParts(new Parts("P4"));
+    Notch_P5 = renderer.registerParts(new Parts("P5"));
 
     //## 加速計の数値宣言 ##//
     mph = renderer.registerParts(new Parts("mph"));
@@ -134,7 +134,6 @@ function init(par1, par2) {
     ATCp_7 = renderer.registerParts(new Parts("ATCp_7"));
     ATCp_8 = renderer.registerParts(new Parts("ATCp_8"));
     ATCp_9 = renderer.registerParts(new Parts("ATCp_9"));
-    ATCp_00 = renderer.registerParts(new Parts("ATCp_00"));
     ATCp_10 = renderer.registerParts(new Parts("ATCp_10"));
     ATCp_20 = renderer.registerParts(new Parts("ATCp_20"));
     ATCp_30 = renderer.registerParts(new Parts("ATCp_30"));
@@ -299,6 +298,67 @@ function init(par1, par2) {
     BC_bar = renderer.registerParts(new Parts("BC_bar"));
     MR_bar = renderer.registerParts(new Parts("MR_bar"));
 
+    //## BC_Dynamicの数値宣言 ##//
+    //x00
+    BC_100 = renderer.registerParts(new Parts("BC_100"));
+    BC_200 = renderer.registerParts(new Parts("BC_200"));
+    BC_300 = renderer.registerParts(new Parts("BC_300"));
+    BC_400 = renderer.registerParts(new Parts("BC_400"));
+    BC_500 = renderer.registerParts(new Parts("BC_500"));
+    //0x0
+    BC_00 = renderer.registerParts(new Parts("BC_00"));
+    BC_10 = renderer.registerParts(new Parts("BC_10"));
+    BC_20 = renderer.registerParts(new Parts("BC_20"));
+    BC_30 = renderer.registerParts(new Parts("BC_30"));
+    BC_40 = renderer.registerParts(new Parts("BC_40"));
+    BC_50 = renderer.registerParts(new Parts("BC_50"));
+    BC_60 = renderer.registerParts(new Parts("BC_60"));
+    BC_70 = renderer.registerParts(new Parts("BC_70"));
+    BC_80 = renderer.registerParts(new Parts("BC_80"));
+    BC_90 = renderer.registerParts(new Parts("BC_90"));
+    //00x
+    BC_0 = renderer.registerParts(new Parts("BC_0"));
+    BC_1 = renderer.registerParts(new Parts("BC_1"));
+    BC_2 = renderer.registerParts(new Parts("BC_2"));
+    BC_3 = renderer.registerParts(new Parts("BC_3"));
+    BC_4 = renderer.registerParts(new Parts("BC_4"));
+    BC_5 = renderer.registerParts(new Parts("BC_5"));
+    BC_6 = renderer.registerParts(new Parts("BC_6"));
+    BC_7 = renderer.registerParts(new Parts("BC_7"));
+    BC_8 = renderer.registerParts(new Parts("BC_8"));
+    BC_9 = renderer.registerParts(new Parts("BC_9"));
+
+    //## MR_Dynamicの数値宣言 ##//
+    //x000
+    MR_1000 = renderer.registerParts(new Parts("MR_1000"));
+    //0x00
+    MR_000 = renderer.registerParts(new Parts("MR_000"));
+    MR_700 = renderer.registerParts(new Parts("MR_700"));
+    MR_800 = renderer.registerParts(new Parts("MR_800"));
+    MR_900 = renderer.registerParts(new Parts("MR_900"));
+    //00x0
+    MR_00 = renderer.registerParts(new Parts("MR_00"));
+    MR_10 = renderer.registerParts(new Parts("MR_10"));
+    MR_20 = renderer.registerParts(new Parts("MR_20"));
+    MR_30 = renderer.registerParts(new Parts("MR_30"));
+    MR_40 = renderer.registerParts(new Parts("MR_40"));
+    MR_50 = renderer.registerParts(new Parts("MR_50"));
+    MR_60 = renderer.registerParts(new Parts("MR_60"));
+    MR_70 = renderer.registerParts(new Parts("MR_70"));
+    MR_80 = renderer.registerParts(new Parts("MR_80"));
+    MR_90 = renderer.registerParts(new Parts("MR_90"));
+    //000x
+    MR_0 = renderer.registerParts(new Parts("MR_0"));
+    MR_1 = renderer.registerParts(new Parts("MR_1"));
+    MR_2 = renderer.registerParts(new Parts("MR_2"));
+    MR_3 = renderer.registerParts(new Parts("MR_3"));
+    MR_4 = renderer.registerParts(new Parts("MR_4"));
+    MR_5 = renderer.registerParts(new Parts("MR_5"));
+    MR_6 = renderer.registerParts(new Parts("MR_6"));
+    MR_7 = renderer.registerParts(new Parts("MR_7"));
+    MR_8 = renderer.registerParts(new Parts("MR_8"));
+    MR_9 = renderer.registerParts(new Parts("MR_9"));
+
     //## 使用保安装置表示ランプ ##//
     ATACS_false = renderer.registerParts(new Parts("ATACS_false"));
     ATACS_true = renderer.registerParts(new Parts("ATACS_true"));
@@ -326,6 +386,8 @@ function init(par1, par2) {
     //パンタ確認
     panta_true = renderer.registerParts(new Parts("panta_Up"));
     panta_false = renderer.registerParts(new Parts("panta_Down"));
+    panta_W51 = renderer.registerParts(new Parts("panta_W51"));
+    panta_Default = renderer.registerParts(new Parts("panta_Default"));
     //走行ﾓｰﾄﾞ確認 RunMode:低速/通常/高速表記 Boost:STPG向け
     RunMode_Slow = renderer.registerParts(new Parts("RunMode_Slow"));
     RunMode_Normal = renderer.registerParts(new Parts("RunMode_Normal"));
