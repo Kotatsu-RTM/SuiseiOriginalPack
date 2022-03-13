@@ -1,0 +1,221 @@
+{
+	"trainName": "Series35_01",
+	"trainType": "EC",
+	"tags": "SuiseiPack TTK KanagawaExpless Noura",
+
+	"trainModel2": {
+		"modelFile": "Series35/Series35.mqo",
+		"textures": [
+			["body",           "textures/train/Series35/01/Series35_01_body.png","Light"],
+			["body_alpha",     "textures/train/Series35/01/Series35_01_body.png","AlphaBlend"],
+			["AuxiliaryParts","textures/train/Series35/01/AuxiliaryParts_1.png","Light"]
+		]
+	},
+
+	"bogieModel2": {
+		"modelFile": "bogie/TS-830.mqo",
+		"textures": [
+			["default","textures/train/bogie_tex/DT138.png"]
+		]
+	},
+
+	"buttonTexture": "textures/train/Series35/01/button_Series35_01.png",
+
+	"rollsignTexture": "textures/train/Series35/kari.png",
+	"rollsignNames": [
+		"None", 
+		"Out_of_Service", 
+		"Test_Run", 
+		"Extra",
+
+		"Lo_Shimizu",
+		"Lo_Ooma",
+		"Lo_Sema",
+		"Lo_Miguchi",
+		"Lo_Ishiyama",
+		"Lo_Kida",
+		"Lo_Sekido",
+		"Lo_Ensu",
+		"Lo_ComCenter",
+		"Oneman_Kida",
+		"Oneman_Senyou",
+
+		"Exp_Shimizu",
+		"Exp_Ooma",
+		"Exp_Miguchi",
+		"Exp_Ishiyama",
+		"Exp_Kida",
+		"Exp_Sekido",
+		"Exp_Ensu",
+		"Exp_ComCenter",
+		"OMExp_Kida",
+		"OMExp_Senyou",
+
+		"LimExp_Shimizu",
+		"LimExp_Ooma",
+		"LimExp_Miguchi",
+		"LimExp_Ishiyama",
+		"LimExp_Kida",
+		
+		"RaLiExp_Shimizu",
+		"RaLiExp_Ooma",
+		"RaLiExp_Sema",
+		"RaLiExp_Miguchi",
+
+		"Hokukyu_Local",
+		"Hokukyu_Expless",
+		"Hokukyu_SemiExp",
+		"CrazyRapid1",
+
+		"None", 
+		"None", 
+		
+		"old_Local",
+		"old_Expless",
+		"old_Rapid", 
+		"old_Crazy_Rapid", 
+
+		"old_Local_Loop", 
+		"old_Exp_Loop", 
+		"old_Rap_Loop", 
+		
+		"old_Local_Subway", 
+		"old_Exp_Subway", 
+		"old_Rap_Subway", 
+
+		"old_Local_Shimizu", 
+		"old_Local_Chuo-Rinkan", 
+		"old_Local_Ooma", 
+		"old_Local_SubwayNagamori", 
+
+		"old_Exp_Shimizu", 
+		"old_Exp_Chuo-Rinkan", 
+		"old_Exp_Ooma", 
+		"old_Exp_SubwayNagamori", 
+		"old_Exp_1", 
+		"old_Exp_2", 
+
+		"old_Rap_Shimizu", 
+		"old_Rap_Chuo-Rinkan", 
+		"old_Rap_Ooma", 
+		"old_Rap_SubwayNagamori"
+	],
+
+	"rollsigns": [
+		{"uv": [0.0, 1.0, 0.0, 1.0],
+		"pos": [
+			[[1.39, 2.3158, -2.6842], [1.39, 2.1053, -2.6842], [1.39, 2.1053, -2.0000], [1.39, 2.3158, -2.0000]],
+			[[-1.39, 2.3158, -2.0000], [-1.39, 2.1053, -2.0000], [-1.39, 2.1053, -2.6842], [-1.39, 2.3158, -2.6842]]
+		],
+		"doAnimation": true,
+		"disableLighting": false
+		}
+	],
+
+	"soundScriptPath":     "scripts/Mhnlib_HS8000chopper.js",
+	"sound_BrakeRelease":  "sound_mugenlib:RTMLib.Brake.BR4N",
+	"sound_BrakeRelease2": "sound_mugenlib:RTMLib.Brake.BR4L",
+	"sound_Horn":          "sound_mhnlib:RTMLib.Horn.Mhn_Horn_50",
+	"sound_DoorOpen":      "sound_mhnlib:RTMLib.Door.Mhn_Door_O21",
+	"sound_DoorClose":     "sound_mhnlib:RTMLib.Door.Mhn_Door_C21",
+	"sound_Announcement": [
+		["Default Horn","sound_mhnlib:RTMLib.Horn.Mhn_Horn_34"],
+		["EmergencyHone","sound_mugenlib:RTMLib.Horn.Horn3"],
+		["EB_announce","sound_mugenlib:RTMLib.sound.E233_Emergency_announce"],
+
+		["MONstop","sound_suisei_lib:RTMLib.extra.MONstop_1"],
+		["Patern","sound_suisei_lib:RTMLib.extra.HK_ATS_Pattern_3"],
+		["ATC","sound_suisei_lib:RTMLib.extra.Ding_1"],
+		["ATS","sound_mhnlib:RTMLib.Sounds.Mhn_Ding6"],
+		
+		["Start_bell","sound_mhnlib:RTMLib.Sounds.Mhn_Bell_2"],
+		["Start_bell_2","sound_mhnlib:RTMLib.Sounds.Mhn_buzzer_1"],
+
+		["melo","sound_mhnlib:RTMLib.Sounds.Mhn_melo12"],
+		["Water Crown2","sound_mugenlib:RTMLib.sound.Water_Crown_2"],
+		["Gota del Vient","sound_mugenlib:RTMLib.sound.Gota_del_Vient"],
+		["SF10_43","sound_suisei_lib:RTMLib.Melody.SF10_43"],
+		["Kinshi1","sound_suisei_lib:RTMLib.Melody.Kinshi_01_door"],
+		["Kinshi2","sound_suisei_lib:RTMLib.Melody.Kinshi_02_door"],
+		["Kinshi3","sound_suisei_lib:RTMLib.Melody.Kinshi_03_door"],
+		["Kinshi4","sound_suisei_lib:RTMLib.Melody.Kinshi_04_door"],
+		["Door_Close","sound_suisei_lib:RTMLib.Announce.door_close_female"],
+		
+		["",""]
+	],
+
+	"guiScriptPath": "scripts/vehicle_GUI.js",
+	"guiTexture": "textures/train/dummy.png",
+	"maxSpeed": [0.42, 0.69, 1.11, 1.53, 1.95],
+	"accelerateion": 0.002010,
+	"isSingleTrain": true,
+	"trainDistance": 8.0,
+	"renderLight": true,
+	"smoothing": true,
+	"rolling": 0.5,
+
+	"seatPos": [
+		[12, 0, 110, 2], [12, 0, 90, 2], [12, 0, 70, 2], [12, 0, 50, 2], [12, 0, 30, 2], [12, 0, 10, 2],
+		[12, 0, -110, 2], [12, 0, -90, 2], [12, 0, -70, 2], [12, 0, -50, 2], [12, 0, -30, 2], [12, 0, -10, 2],
+		[-12, 0, 110, 2], [-12, 0, 90, 2], [-12, 0, 70, 2], [-12, 0, 50, 2], [-12, 0, 30, 2], [-12, 0, 10, 2],
+		[-12, 0, -110, 2], [-12, 0, -90, 2], [-12, 0, -70, 2], [-12, 0, -50, 2], [-12, 0, -30, 2], [-12, 0, -10, 2]
+	],
+
+	"interiorLights": [
+		{"pos": [0.0, 2.5, 4.0]},
+		{"pos": [0.0, 2.5, -4.0]}
+	],
+
+	"playerPos": [
+		[0.0, 0.175, 6.95],
+		[0.0, 0.175, -6.95]
+	],
+
+	"bogiePos": [
+		[0.0, 0.0, 5.0],
+		[0.0, 0.0, -5.0]
+	],
+
+	"door_left": [
+		{"objects": ["door_LF"],
+		"pos": [0.0, 0.0, 0.0],
+		"transform": [[0.0, 0.0, 1]]},
+		{"objects": ["door_LB"],
+		"pos": [0.0, 0.0, 0.0],
+		"transform": [[0.0, 0.0, -1]]}
+	],
+
+	"door_right": [
+		{"objects": ["door_RF"],
+		"pos": [0.0, 0.0, 0.0],
+		"transform": [[0.0, 0.0, 1]]},
+		{"objects": ["door_RB"],
+		"pos": [0.0, 0.0, 0.0],
+		"transform": [[0.0, 0.0, -1]]}
+	],
+
+	"pantograph_front": [{
+		"objects": ["panta_1"],
+		"pos": [0.0, 2.8784, -6.0224],
+		"transform": [[12, 1.0, 0.0, 0.0]],
+		"childParts": [{
+			"objects": ["panta_2"],
+			"pos": [0.0, 3.8526, -4.5700],
+			"transform": [[-27, 1.0, 0.0, 0.0]],
+			"childParts": [{
+				"objects": ["panta_3"],
+				"pos": [0.0, 4.6227, -5.4771],
+				"transform": [[15, 1.0, 0.0, 0.0]]
+			}]
+		}]
+	},{
+		"objects": ["panta_4"],
+		"pos": [0.0, 2.8784, -4.9776],
+		"transform": [[-12, 1.0, 0.0, 0.0]],
+		"childParts": [{
+			"objects": ["panta_5"],
+			"pos": [0.0, 3.8526, -6.4300],
+			"transform": [[27, 1.0, 0.0, 0.0]]
+		}]
+	}]
+}
