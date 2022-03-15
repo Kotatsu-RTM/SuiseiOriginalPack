@@ -31,7 +31,7 @@ function init(par1, par2) {
         "Suisei_Cab","Base1_new","Base2","Base3","Base4","Base5","Box","Bogo_Musen","Display",
         "DM_Sys","DeadMan_System","DeadMan_System_Push",
         "Notch_Print","MasConPed",
-        "Leverser","Rotate","Leverser_Print",
+        "Leverser","Leverser_Print",
         "Shubetsu_Object","VehicleNumber_Object",
         "Train_Lamp_Check","Face_Lamp_Check","Kaisei_Check","Panta_Check","RunMode_Check"
     ));
@@ -202,6 +202,8 @@ function init(par1, par2) {
     miniHUD_ATSBar = renderer.registerParts(new Parts("P_Bar"));
     //miniHUD_Ps1Bar = renderer.registerParts(new Parts("Ps_Bar01")); そのうちATACSで使うのでその予約
     //miniHUD_Ps2Bar = renderer.registerParts(new Parts("Ps_Bar02")); そのうちATACSで使うのでその予約
+    patternCross = renderer.registerParts(new Parts("patternCross"));
+    lowerSignal = renderer.registerParts(new Parts("lowerSignal"));
 
     //## miniHUDのランプ点灯用 左上から順に1,2,3です ##//
     //miniHud
