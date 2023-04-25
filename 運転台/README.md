@@ -5,7 +5,7 @@
 | :--  | :--  |
 | Package    | 彗星鉄道車両研究所製作 運転台アドオン |
 | Version    | 2.0 |
-| License    | [SUISEI RAILWAY LICENSE 1.1](https://waya0125.com/RTM_LICENSE)
+| License    | [SUISEI RAILWAY LICENCE 1.2 - ライセンスA](https://waya0125.com/RTM_LICENCE) |
 | Creator    | わや／wayamoti2015@waya0125 |
 | Supporter  | [Siwo951](https://twitter.com/Siwo9515) |
 | Website    | https://waya0125.com/ |
